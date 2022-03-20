@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: skin-doctor
+  name: skin-doctor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: skin-doctor
+  template:
+    metadata:
+      labels:
+        app: skin-doctor
+        tier: frontend
+        environment: production
+        release: stable
+        team: ai-platform
+      annotations:
+        babylonhealth/data-scientist: rfdickerson
+    spec:
+      containers:
+      - name: image-service
+        image: gcr.io/learn-kube-344502/image-service:v2
+        command: ["uvicorn"]
+        args: ["grpc_client:app", "--host", "0.0.0.0"]
+        env:
+          - name: TRITON_URL
+            value: triton.skin-doctor.svc.cluster.local:8001
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "300m"
+          limits:
+            memory: "256Mi"
+            cpu: "300m"
+
