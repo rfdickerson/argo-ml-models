@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: triton
-  labels:
-    app: triton
+  name: triton-service
 spec:
+  type: ClusterIP
   selector:
       app: triton
+      tier: inference
   ports:
     - protocol: TCP
       name: http
