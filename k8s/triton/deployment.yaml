@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: triton
+  name: triton-inference
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: triton
+  template:
+    metadata:
+      labels:
+        app: triton
+        tier: inference
+        team: ai-platform
+    spec:
+      containers:
+      - name: triton-inference
+        image: nvcr.io/nvidia/tritonserver:22.02-py3
+        imagePullPolicy: IfNotPresent
+        command: ["tritonserver"]
+        args: ["--model-repository=gs://robsmodels"]
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "300m"
+          limits:
+            memory: "800Mi"
+            cpu: "500m"       

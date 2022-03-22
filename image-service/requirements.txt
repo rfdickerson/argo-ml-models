@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+tritonclient
+torchvision
+grpcio-tools
+python-multipart

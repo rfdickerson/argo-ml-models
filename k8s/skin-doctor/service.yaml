@@ -8,7 +8,7 @@ spec:
   type: NodePort
   selector:
     app: skin-doctor
-    environment: production
   ports:
     - protocol: TCP
       port: 8000
+      targetPort: 8000
