@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: skin-doctor
       tier: frontend
-  replicas: 3
+  replicas: 4
   template:
     metadata:
       labels:
