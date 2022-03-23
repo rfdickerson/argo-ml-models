@@ -24,7 +24,10 @@ spec:
         args: ["grpc_client:app", "--host", "0.0.0.0"]
         env:
           - name: TRITON_URL
-            value: triton-service.prod.svc.cluster.local:8001
+            valueFrom:
+              configMapKeyRef:
+                name: skin-config
+                key: triton.url
         livenessProbe:
           httpGet:
             path: /health
